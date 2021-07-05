@@ -1,15 +1,34 @@
 package github.idmeetrious.pokemon.data.datasource.local
 
-class LocalDataSourceImpl: LocalDataSource {
-    override suspend fun add() {
-        TODO("Not yet implemented")
+import github.idmeetrious.pokemon.data.db.PokemonDao
+import github.idmeetrious.pokemon.data.mappers.DbEntityMapper
+import github.idmeetrious.pokemon.domain.entities.Pokemon
+import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
+class LocalDataSourceImpl(
+    private val pokemonDao: PokemonDao,
+    private val mapper: DbEntityMapper
+): LocalDataSource {
+
+    override suspend fun getFavorite(): Single<List<Pokemon>> {
+        val favorite = pokemonDao.getPokemons()
+        return favorite.map { list ->
+            list.map { pokemon ->
+                mapper.toPokemonEntity(pokemon)
+            }
+        }
     }
 
-    override suspend fun read() {
-        TODO("Not yet implemented")
-    }
+    override suspend fun addFavorite(pokemon: Pokemon) =
+        withContext(Dispatchers.IO){
+            pokemonDao.savePokemon(mapper.toPokemonDbEntity(pokemon))
+        }
 
-    override suspend fun remove() {
-        TODO("Not yet implemented")
-    }
+    override suspend fun removeFavorite(pokemon: Pokemon) =
+        withContext(Dispatchers.IO){
+            pokemonDao.removePokemon(mapper.toPokemonDbEntity(pokemon))
+        }
+
 }

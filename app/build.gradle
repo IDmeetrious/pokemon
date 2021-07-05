@@ -58,6 +58,7 @@ dependencies {
 
     // JetPack - Room
     implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava3:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
     // JetPack - ViewModel
