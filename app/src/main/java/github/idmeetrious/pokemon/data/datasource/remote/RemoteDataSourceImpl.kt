@@ -4,7 +4,6 @@ import github.idmeetrious.pokemon.data.api.PokeApi
 import github.idmeetrious.pokemon.data.mappers.DtoToEntityMapper
 import github.idmeetrious.pokemon.domain.common.Result
 import github.idmeetrious.pokemon.domain.entities.Pokemon
-import io.reactivex.rxjava3.core.Maybe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
