@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/intro_logo"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:contentDescription="@string/pokemon_logo"
+        android:src="@drawable/pokemon_logo"
+        tools:src="@drawable/pokemon_logo"/>
+
+    <LinearLayout
+        android:id="@+id/intro_menu_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Theme.Intro.Menu"
+        android:layout_gravity="center">
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/Widget.Pokemon.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/navigation_menu"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/intro_to_search_screen_btn"
+            style="@style/Widget.Pokemon.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/move_search_screen_btn"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/intro_to_random_screen_btn"
+            style="@style/Widget.Pokemon.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/move_random_screen_btn"/>
+    </LinearLayout>
+
+</FrameLayout>
