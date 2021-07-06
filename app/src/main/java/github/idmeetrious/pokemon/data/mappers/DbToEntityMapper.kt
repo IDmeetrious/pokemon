@@ -5,7 +5,7 @@ import github.idmeetrious.pokemon.data.db.entities.SpritesData
 import github.idmeetrious.pokemon.domain.entities.Pokemon
 import github.idmeetrious.pokemon.domain.entities.Sprites
 
-class DbEntityMapper {
+class DbToEntityMapper {
     fun toPokemonDbEntity(pokemon: Pokemon): PokemonData {
         pokemon.let {
             return PokemonData(

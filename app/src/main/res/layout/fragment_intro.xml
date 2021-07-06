@@ -22,21 +22,21 @@
         android:layout_gravity="center">
 
         <com.google.android.material.textview.MaterialTextView
-            style="@style/Widget.Pokemon.TextView"
+            style="@style/Widget.Intro.TextView.White"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/navigation_menu"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/intro_to_search_screen_btn"
-            style="@style/Widget.Pokemon.Button"
+            style="@style/Widget.Intro.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/move_search_screen_btn"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/intro_to_random_screen_btn"
-            style="@style/Widget.Pokemon.Button"
+            style="@style/Widget.Intro.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/move_random_screen_btn"/>

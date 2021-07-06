@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import github.idmeetrious.pokemon.R
 import github.idmeetrious.pokemon.databinding.FragmentIntroBinding
 
 private const val TAG = "IntroFragment"
@@ -39,6 +41,7 @@ class IntroFragment : Fragment() {
         // Move to search screen
         binding.introToSearchScreenBtn.setOnClickListener {
             Log.i(TAG, "--> onViewCreated: Move to search screen")
+            view.findNavController().navigate(R.id.action_introFragment_to_searchFragment)
         }
         // Move to random screen
         binding.introToRandomScreenBtn.setOnClickListener {
@@ -86,8 +89,6 @@ class IntroFragment : Fragment() {
                     rotateAnimator.start()
                 }
             }.start()
-
-
     }
 
     private fun initViews() {
@@ -97,7 +98,6 @@ class IntroFragment : Fragment() {
     }
 
     private fun updateViews() {
-//        (requireActivity() as AppCompatActivity).supportActionBar?.show()
         binding.introLogo.visibility = View.GONE
         binding.introMenuLayout.visibility = View.VISIBLE
     }

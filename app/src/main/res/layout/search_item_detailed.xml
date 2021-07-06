@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.Search.ItemView"
+    android:id="@+id/search_result_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/item_id_static_tv"
+        style="@style/Widget.Search.TextView.Static"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/id_static_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/item_front_shiny_iv"
+        app:layout_constraintStart_toEndOf="@+id/item_front_shiny_iv"
+        app:layout_constraintTop_toTopOf="@+id/item_front_shiny_iv" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/item_name_static_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        style="@style/Widget.Search.TextView.Static"
+        android:text="@string/name_static_tv"
+        app:layout_constraintStart_toStartOf="@+id/item_id_static_tv"
+        app:layout_constraintTop_toBottomOf="@+id/item_id_static_tv" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/item_height_static_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        style="@style/Widget.Search.TextView.Static"
+        android:text="@string/height_static_tv"
+        app:layout_constraintStart_toStartOf="@+id/item_name_static_tv"
+        app:layout_constraintTop_toBottomOf="@+id/item_name_static_tv" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/item_weight_static_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        style="@style/Widget.Search.TextView.Static"
+        android:text="@string/weight_static_tv"
+        app:layout_constraintStart_toStartOf="@+id/item_height_static_tv"
+        app:layout_constraintTop_toBottomOf="@+id/item_height_static_tv" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/item_weight_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        style="@style/Widget.Search.TextView"
+        android:text="@string/weight_tv"
+        app:layout_constraintStart_toEndOf="@+id/item_weight_static_tv"
+        app:layout_constraintTop_toTopOf="@+id/item_weight_static_tv" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/item_height_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        style="@style/Widget.Search.TextView"
+        android:text="@string/height_tv"
+        app:layout_constraintStart_toEndOf="@+id/item_height_static_tv"
+        app:layout_constraintTop_toTopOf="@+id/item_height_static_tv" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/item_id_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        style="@style/Widget.Search.TextView"
+        android:text="@string/id_tv"
+        app:layout_constraintStart_toEndOf="@+id/item_id_static_tv"
+        app:layout_constraintTop_toTopOf="@+id/item_id_static_tv" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/item_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        style="@style/Widget.Search.TextView"
+        android:text="@string/name_tv"
+        app:layout_constraintStart_toEndOf="@+id/item_name_static_tv"
+        app:layout_constraintTop_toTopOf="@+id/item_name_static_tv" />
+
+    <ImageView
+        android:id="@+id/item_front_def_iv"
+        style="@style/Widget.Search.Item.ImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+    <ImageView
+        android:id="@+id/item_back_def_iv"
+        style="@style/Widget.Search.Item.ImageView"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/item_front_def_iv"
+        app:layout_constraintTop_toBottomOf="@+id/item_front_def_iv"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+    <ImageView
+        android:id="@+id/item_front_shiny_iv"
+        style="@style/Widget.Search.Item.ImageView"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/item_front_def_iv"
+        app:layout_constraintTop_toTopOf="@+id/item_front_def_iv"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+    <ImageView
+        android:id="@+id/item_back_shiny_iv"
+        style="@style/Widget.Search.Item.ImageView"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/item_front_shiny_iv"
+        app:layout_constraintTop_toBottomOf="@+id/item_front_shiny_iv"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/item_favorite_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/add_to_favorite_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_back_def_iv" />
+</androidx.constraintlayout.widget.ConstraintLayout>

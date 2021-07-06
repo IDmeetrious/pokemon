@@ -2,28 +2,27 @@ package github.idmeetrious.pokemon.presentation.application.di
 
 import android.content.Context
 import android.content.res.Resources
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import github.idmeetrious.pokemon.presentation.application.App
-import github.idmeetrious.pokemon.presentation.application.di.qualifier.ApplicationContext
 import javax.inject.Singleton
 
-@Module(includes = [
-    DatabaseModule::class,
-    NetworkModule::class,
-    RepositoryModule::class
-])
-abstract class AppModule {
+@Module(
+    includes = [
+        DatabaseModule::class,
+        NetworkModule::class,
+        RepositoryModule::class,
+        UseCaseModule::class,
+    ]
+)
+class AppModule(private val context: Context) {
 
-    @ApplicationContext
-    @Binds
-    abstract fun provideApplicationContext(app: App): Context
+    @[Provides Singleton]
+    fun provideApplicationContext(): Context = context
 
-    companion object{
+    companion object {
         @Singleton
         @Provides
-        fun provideAppResources(context: Context): Resources{
+        fun provideAppResources(context: Context): Resources {
             return context.resources
         }
     }
