@@ -12,8 +12,8 @@ class RepositoryImpl(
     private val remoteDataSource: RemoteDataSource
 ) : Repository {
 
-    override suspend fun getPokemonRemote(id: Int): Result<Pokemon> {
-        return remoteDataSource.getPokemon(id)
+    override suspend fun getPokemonRemote(name: String): Single<Pokemon> {
+        return remoteDataSource.getPokemon(name)
     }
 
     override suspend fun getFavorite(): Single<List<Pokemon>> {

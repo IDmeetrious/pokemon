@@ -6,8 +6,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface PokeApi {
-    @GET("/pokemon/{id}/")
-    fun getPokemonById(
-        @Path("id") id: Int
+    @GET("pokemon/{name}/")
+    fun getPokemonByName(
+        @Path("name") name: String = "1"
     ): Single<PokemonDto>
 }

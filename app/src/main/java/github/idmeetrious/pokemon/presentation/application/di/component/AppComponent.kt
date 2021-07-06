@@ -2,13 +2,15 @@ package github.idmeetrious.pokemon.presentation.application.di.component
 
 import dagger.Component
 import github.idmeetrious.pokemon.presentation.application.di.AppModule
-import github.idmeetrious.pokemon.presentation.application.di.RepositoryModule
+import github.idmeetrious.pokemon.presentation.ui.search.SearchViewModel
+import javax.inject.Singleton
 
+@Singleton
 @Component(
     modules = [
         AppModule::class
     ]
 )
-interface AppComponent{
-
+interface AppComponent {
+    fun inject(searchViewModel: SearchViewModel)
 }
