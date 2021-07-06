@@ -1,7 +1,13 @@
 <resources>
     <!-- Application   -->
     <string name="app_name">Pokemon</string>
+    <string name="pokemon_logo">Pokemon Logo</string>
+
     <!-- Intro   -->
+    <string name="move_search_screen_btn">Go to search screen</string>
+    <string name="move_random_screen_btn">Go to random screen</string>
+    <string name="navigation_menu">Menu</string>
+
     <!-- Search   -->
     <!-- Random   -->
     <!-- Favorite   -->
