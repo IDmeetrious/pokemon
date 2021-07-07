@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import github.idmeetrious.pokemon.domain.common.Status
 import github.idmeetrious.pokemon.domain.entities.Pokemon
+import github.idmeetrious.pokemon.domain.usecases.AddFavoriteUseCase
 import github.idmeetrious.pokemon.domain.usecases.GetPokemonUseCase
 import github.idmeetrious.pokemon.presentation.application.App
 import io.reactivex.rxjava3.disposables.Disposable
@@ -19,33 +20,54 @@ private const val TAG = "SearchViewModel"
 class SearchViewModel : ViewModel() {
     @Inject
     lateinit var getPokemonUseCase: GetPokemonUseCase
+
+    @Inject
+    lateinit var addFavoriteUseCase: AddFavoriteUseCase
+
     private var disposable: Disposable? = null
 
     private var _pokemon: MutableStateFlow<Pokemon?> = MutableStateFlow(null)
     val pokemon get() = _pokemon
 
-    private var _status: MutableStateFlow<Status> = MutableStateFlow(Status.SUCCESS)
-    val status get() = _status
+    private var _downloadState: MutableStateFlow<Status> = MutableStateFlow(Status.SUCCESS)
+    val downloadState get() = _downloadState
+
+    private var _uploadState: MutableStateFlow<Status> = MutableStateFlow(Status.SUCCESS)
+    val uploadState get() = _uploadState
 
     init {
         App.appComponent.inject(this)
     }
 
     suspend fun findPokemon(name: String) = withContext(Dispatchers.IO) {
-        _status.emit(Status.LOADING)
+        _downloadState.emit(Status.LOADING)
+        _uploadState.emit(Status.LOADING)
         disposable = getPokemonUseCase.invoke(name)
             .subscribeOn(Schedulers.io())
             .subscribe({
                 viewModelScope.launch {
-                    _status.emit(Status.SUCCESS)
+                    _downloadState.emit(Status.SUCCESS)
                     _pokemon.emit(it)
                 }
 
             }, {
                 viewModelScope.launch {
-                    _status.emit(Status.ERROR)
+                    _downloadState.emit(Status.ERROR)
                 }
             })
+    }
+
+    fun addFavorite() {
+        pokemon.value?.let {
+            viewModelScope.launch {
+                _uploadState.emit(Status.LOADING)
+                addFavoriteUseCase.invoke(it)
+            }.invokeOnCompletion {
+                viewModelScope.launch {
+                    _uploadState.emit(Status.SUCCESS)
+                }
+            }
+        }
     }
 
     override fun onCleared() {

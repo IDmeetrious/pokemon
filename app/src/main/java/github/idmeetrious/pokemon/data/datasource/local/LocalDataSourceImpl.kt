@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 class LocalDataSourceImpl(
     private val pokemonDao: PokemonDao,
     private val mapperTo: DbToEntityMapper
-): LocalDataSource {
+) : LocalDataSource {
 
     override suspend fun getFavorite(): Single<List<Pokemon>> {
         val favorite = pokemonDao.getPokemons()
@@ -22,12 +22,12 @@ class LocalDataSourceImpl(
     }
 
     override suspend fun addFavorite(pokemon: Pokemon) =
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             pokemonDao.savePokemon(mapperTo.toPokemonDbEntity(pokemon))
         }
 
     override suspend fun removeFavorite(pokemon: Pokemon) =
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             pokemonDao.removePokemon(mapperTo.toPokemonDbEntity(pokemon))
         }
 

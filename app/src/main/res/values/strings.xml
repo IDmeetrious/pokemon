@@ -11,7 +11,7 @@
     <!-- Search   -->
     <string name="search_field_hint">For example: pikachu</string>
     <string name="title_tv">Find your pokemon</string>
-    <string name="searching_result_tv">Searching result: </string>
+    <string name="searching_result_tv">Searching result:</string>
     <string name="id_static_tv">Id: </string>
     <string name="name_static_tv">name: </string>
     <string name="height_static_tv">height: </string>
@@ -21,6 +21,7 @@
     <string name="id_tv">999</string>
     <string name="name_tv">Pokemon</string>
     <string name="add_to_favorite_btn">Add to favorite</string>
+    <string name="success_in_favorite_btn">Successfully added!</string>
 
     <!-- Random   -->
     <!-- Favorite   -->

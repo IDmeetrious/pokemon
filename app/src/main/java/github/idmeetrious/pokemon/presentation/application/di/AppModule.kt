@@ -11,7 +11,7 @@ import javax.inject.Singleton
         DatabaseModule::class,
         NetworkModule::class,
         RepositoryModule::class,
-        UseCaseModule::class,
+        UseCaseModule::class
     ]
 )
 class AppModule(private val context: Context) {

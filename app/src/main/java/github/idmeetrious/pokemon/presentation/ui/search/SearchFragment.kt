@@ -1,5 +1,6 @@
 package github.idmeetrious.pokemon.presentation.ui.search
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -7,11 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import github.idmeetrious.pokemon.R
 import github.idmeetrious.pokemon.databinding.FragmentSearchBinding
 import github.idmeetrious.pokemon.domain.common.Status
+import github.idmeetrious.pokemon.domain.entities.Pokemon
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 
@@ -39,39 +44,26 @@ class SearchFragment : Fragment() {
         return rootView
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainScope.launch {
-            viewModel.status.collect { status ->
-                when (status) {
-                    Status.LOADING -> {
-                        Log.i(TAG, "--> onViewCreated: LOADING")
-                        binding.searchProgress.visibility = View.VISIBLE
-                    }
-                    Status.SUCCESS -> {
-                        Log.i(TAG, "--> onViewCreated: SUCCESS")
-                        binding.searchProgress.visibility = View.GONE
-                    }
-                    Status.ERROR -> {
-                        Log.i(TAG, "--> onViewCreated: ERROR")
-                        binding.searchProgress.visibility = View.GONE
-                    }
-                }
-            }
-        }
+        updateProgressBar()
         mainScope.launch {
             viewModel.pokemon.collect { pokemon ->
                 pokemon?.let {
                     binding.searchResultTv.apply {
                         visibility = View.VISIBLE
-                        append("1")
                     }
 
                     binding.searchResultItemLayout.apply {
                         searchResultItemLayout.visibility = View.VISIBLE
-                        Glide.with(view)
-                            .load(it.sprites.frontDefault)
-                            .into(itemFrontDefIv)
+                        it.sprites.let { sprite ->
+                            loadImage(sprite.backDefault, itemBackDefIv)
+                            loadImage(sprite.backShiny, itemBackShinyIv)
+                            loadImage(sprite.frontDefault, itemFrontDefIv)
+                            loadImage(sprite.frontShiny, itemFrontShinyIv)
+                        }
+                        loadItem(it, itemIdTv, itemNameTv, itemHeightTv, itemWeightTv)
                     }
                 }
             }
@@ -86,9 +78,62 @@ class SearchFragment : Fragment() {
                 }
             hideKeyboard()
         }
-        binding.searchResultItemLayout.itemFavoriteBtn.setOnClickListener {
-            Log.i(TAG, "--> onViewCreated: Add favorite clicked")
+        binding.searchResultItemLayout.itemFavoriteBtn.apply {
+            setOnClickListener {
+                Log.i(TAG, "--> onViewCreated: Add favorite clicked")
+                viewModel.addFavorite()
+            }
         }
+        updateFavoriteButton()
+    }
+
+    private fun updateProgressBar() {
+        binding.searchProgress.visibility.apply {
+            mainScope.launch {
+                viewModel.downloadState.collect { status ->
+                    when (status) {
+                        Status.LOADING -> { View.VISIBLE }
+                        Status.SUCCESS -> { View.GONE }
+                        Status.ERROR -> { View.GONE }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateFavoriteButton() {
+        binding.searchResultItemLayout.itemFavoriteBtn.apply {
+            mainScope.launch {
+                viewModel.uploadState.collect { status ->
+                    if (status == Status.SUCCESS) {
+                        setText(R.string.success_in_favorite_btn)
+                    } else {
+                        setText(R.string.add_to_favorite_btn)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loadImage(uri: String, iv: ImageView) {
+        view?.let {
+            iv.scaleX = 1.2f
+            iv.scaleY = 1.2f
+            Glide.with(it)
+                .load(uri)
+                .placeholder(android.R.drawable.ic_menu_gallery)
+                .into(iv)
+        }
+    }
+
+    private fun loadItem(
+        p: Pokemon, id: TextView, name: TextView, height: TextView, weight: TextView
+    ) {
+        id.text = "${p.id}"
+        name.text = p.name
+        height.text = "${p.height}"
+        weight.text = "${p.weight}"
+
     }
 
     private fun hideKeyboard() {
