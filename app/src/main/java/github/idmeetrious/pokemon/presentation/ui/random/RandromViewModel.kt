@@ -1,4 +1,4 @@
-package github.idmeetrious.pokemon.presentation.ui.search
+package github.idmeetrious.pokemon.presentation.ui.random
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -17,9 +17,9 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.random.Random
 
-private const val TAG = "SearchViewModel"
+private const val TAG = "RandomViewModel"
 
-class SearchViewModel : ViewModel() {
+class RandomViewModel : ViewModel() {
     @Inject
     lateinit var getPokemonUseCase: GetPokemonUseCase
 
