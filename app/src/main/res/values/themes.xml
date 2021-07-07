@@ -17,6 +17,8 @@
         <item name="android:orientation">vertical</item>
         <item name="android:paddingStart">@dimen/layout_padding_horizontal_32</item>
         <item name="android:paddingEnd">@dimen/layout_padding_horizontal_32</item>
+        <item name="android:layout_marginStart">@dimen/layout_padding_vertical_8</item>
+        <item name="android:layout_marginEnd">@dimen/layout_padding_vertical_8</item>
         <item name="android:background">@drawable/rounded_box_border_solid</item>
     </style>
     <style name="Widget.Intro.Button" parent="Widget.MaterialComponents.Button">

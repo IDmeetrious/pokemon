@@ -9,9 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import github.idmeetrious.pokemon.R
 import github.idmeetrious.pokemon.databinding.FragmentSearchBinding
@@ -24,15 +27,16 @@ private const val TAG = "SearchFragment"
 
 class SearchFragment : Fragment() {
 
-    private val viewModel: SearchViewModel by lazy {
-        ViewModelProvider(this).get(SearchViewModel::class.java)
-    }
+    private val viewModel: SearchViewModel by activityViewModels()
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
     private val ioScope = CoroutineScope(Dispatchers.IO + Job())
     private val mainScope = CoroutineScope(Dispatchers.Main + Job())
+
+    private var progressBar: ProgressBar? = null
+    private var itemView: ConstraintLayout? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,13 +45,17 @@ class SearchFragment : Fragment() {
     ): View? {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val rootView = binding.root
+        progressBar = requireActivity().findViewById(R.id.main_search_progress)
+        itemView = binding.searchResultItemLayout.searchResultItemLayout
         return rootView
     }
 
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateProgressBar()
+
+        updateViewsWithProgress()
+
         mainScope.launch {
             viewModel.pokemon.collect { pokemon ->
                 pokemon?.let {
@@ -87,14 +95,28 @@ class SearchFragment : Fragment() {
         updateFavoriteButton()
     }
 
-    private fun updateProgressBar() {
-        binding.searchProgress.apply {
-            mainScope.launch {
-                viewModel.downloadState.collect { status ->
-                    visibility = when (status) {
-                        Status.LOADING -> { View.VISIBLE }
-                        Status.SUCCESS -> { View.GONE }
-                        Status.ERROR -> { View.GONE }
+    private fun updateViewsWithProgress() {
+        mainScope.launch {
+            viewModel.downloadState.collect { status ->
+                when (status) {
+                    Status.LOADING -> {
+                        progressBar?.visibility = View.VISIBLE
+                        itemView?.visibility = View.INVISIBLE
+                    }
+                    Status.SUCCESS -> {
+                        progressBar?.visibility = View.GONE
+                        itemView?.visibility = View.VISIBLE
+                    }
+                    Status.ERROR -> {
+                        progressBar?.visibility = View.GONE
+                        itemView?.visibility = View.VISIBLE
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.status_error_message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    Status.INIT -> {
                     }
                 }
             }
@@ -144,6 +166,7 @@ class SearchFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        progressBar = null
     }
 
     override fun onDestroy() {
