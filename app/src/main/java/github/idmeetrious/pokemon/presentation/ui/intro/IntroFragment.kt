@@ -3,7 +3,6 @@ package github.idmeetrious.pokemon.presentation.ui.intro
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,17 +36,6 @@ class IntroFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         playAnimationLogo()
-
-        // Move to search screen
-        binding.introToSearchScreenBtn.setOnClickListener {
-            Log.i(TAG, "--> onViewCreated: Move to search screen")
-            view.findNavController().navigate(R.id.action_introFragment_to_searchFragment)
-        }
-        // Move to random screen
-        binding.introToRandomScreenBtn.setOnClickListener {
-            Log.i(TAG, "--> onViewCreated: Move to random screen")
-            view.findNavController().navigate(R.id.action_introFragment_to_randomFragment)
-        }
     }
 
     @SuppressLint("Recycle")
@@ -60,8 +48,8 @@ class IntroFragment : Fragment() {
                 }
                 duration = 500
                 doOnEnd {
-                    Log.i(TAG, "--> playAnimationLogo: fadeOut")
                     updateViews()
+                    view?.findNavController()?.navigate(R.id.action_introFragment_to_menuFragment)
                 }
             }
 
@@ -73,7 +61,6 @@ class IntroFragment : Fragment() {
                 }
                 duration = 2000
                 doOnEnd {
-                    Log.i(TAG, "--> playAnimationLogo: rotation")
                     fadeOutAnimator.start()
                 }
             }
@@ -86,7 +73,6 @@ class IntroFragment : Fragment() {
                 }
                 duration = 1000
                 doOnEnd {
-                    Log.i(TAG, "--> playAnimationLogo: fadeIn")
                     rotateAnimator.start()
                 }
             }.start()
@@ -95,12 +81,10 @@ class IntroFragment : Fragment() {
     private fun initViews() {
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
         binding.introLogo.visibility = View.VISIBLE
-        binding.introMenuLayout.visibility = View.GONE
     }
 
     private fun updateViews() {
         binding.introLogo.visibility = View.GONE
-        binding.introMenuLayout.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {

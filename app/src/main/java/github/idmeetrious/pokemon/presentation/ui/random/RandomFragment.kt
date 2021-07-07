@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import github.idmeetrious.pokemon.R
 import github.idmeetrious.pokemon.databinding.FragmentRandomBinding
@@ -25,7 +26,9 @@ private const val TAG = "RandomFragment"
 
 class RandomFragment : Fragment() {
 
-    private val viewModel: SearchViewModel by activityViewModels()
+    private val viewModel: RandomViewModel by lazy {
+        ViewModelProvider(this).get(RandomViewModel::class.java)
+    }
 
     private val mainScope = CoroutineScope(Dispatchers.Main + Job())
     private val ioScope = CoroutineScope(Dispatchers.IO + Job())
@@ -52,7 +55,6 @@ class RandomFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRandomItem()
-
         updateViewsWithProgress()
 
         binding.randromBtn.setOnClickListener {
@@ -86,6 +88,7 @@ class RandomFragment : Fragment() {
     }
 
     private fun initRandomItem() {
+        viewModel.setInitStatus()
         viewModel.findRandomPokemon()
     }
 
@@ -104,12 +107,16 @@ class RandomFragment : Fragment() {
                     Status.ERROR -> {
                         progressBar?.visibility = View.GONE
                         itemView?.visibility = View.VISIBLE
-                        Toast.makeText(requireContext(),
+                        Toast.makeText(
+                            requireContext(),
                             getString(R.string.status_error_message),
                             Toast.LENGTH_LONG
                         ).show()
                     }
-                    Status.INIT -> {}
+                    Status.INIT -> {
+                        progressBar?.visibility = View.INVISIBLE
+                        itemView?.visibility = View.INVISIBLE
+                    }
                 }
             }
         }
@@ -131,8 +138,6 @@ class RandomFragment : Fragment() {
 
     private fun loadImage(uri: String, iv: ImageView) {
         view?.let {
-            iv.scaleX = 1.2f
-            iv.scaleY = 1.2f
             Glide.with(it)
                 .load(uri)
                 .placeholder(android.R.drawable.ic_menu_gallery)

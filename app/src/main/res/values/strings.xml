@@ -1,6 +1,6 @@
 <resources>
     <!-- Application   -->
-    <string name="app_name">Pokemon</string>
+    <string name="app_name">POKEMON APP</string>
     <string name="pokemon_logo">Pokemon Logo</string>
     <string name="status_error_message">Can\'t load pokemon information</string>
 
