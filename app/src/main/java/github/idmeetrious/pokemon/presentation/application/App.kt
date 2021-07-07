@@ -3,6 +3,7 @@ package github.idmeetrious.pokemon.presentation.application
 import android.app.Application
 import github.idmeetrious.pokemon.presentation.application.di.AppModule
 import github.idmeetrious.pokemon.presentation.application.di.DatabaseModule
+import github.idmeetrious.pokemon.presentation.application.di.UseCaseModule
 import github.idmeetrious.pokemon.presentation.application.di.component.AppComponent
 import github.idmeetrious.pokemon.presentation.application.di.component.DaggerAppComponent
 import javax.inject.Singleton
