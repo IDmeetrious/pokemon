@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.random.Random
 
 private const val TAG = "SearchViewModel"
 
@@ -29,10 +30,10 @@ class SearchViewModel : ViewModel() {
     private var _pokemon: MutableStateFlow<Pokemon?> = MutableStateFlow(null)
     val pokemon get() = _pokemon
 
-    private var _downloadState: MutableStateFlow<Status> = MutableStateFlow(Status.SUCCESS)
+    private var _downloadState: MutableStateFlow<Status> = MutableStateFlow(Status.INIT)
     val downloadState get() = _downloadState
 
-    private var _uploadState: MutableStateFlow<Status> = MutableStateFlow(Status.SUCCESS)
+    private var _uploadState: MutableStateFlow<Status> = MutableStateFlow(Status.INIT)
     val uploadState get() = _uploadState
 
     init {
@@ -73,5 +74,12 @@ class SearchViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         disposable?.dispose()
+    }
+
+    fun findRandomPokemon() {
+        val random = Random.nextInt(1, 1000)
+        viewModelScope.launch {
+            findPokemon("$random")
+        }
     }
 }

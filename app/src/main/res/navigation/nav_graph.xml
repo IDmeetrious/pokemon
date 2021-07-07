@@ -12,9 +12,16 @@
         <action
             android:id="@+id/action_introFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_introFragment_to_randomFragment"
+            app:destination="@id/randomFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="github.idmeetrious.pokemon.presentation.ui.search.SearchFragment"
         android:label="SearchFragment" />
+    <fragment
+        android:id="@+id/randomFragment"
+        android:name="github.idmeetrious.pokemon.presentation.ui.random.RandomFragment"
+        android:label="RandomFragment" />
 </navigation>

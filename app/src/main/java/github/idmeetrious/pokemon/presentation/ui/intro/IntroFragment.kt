@@ -46,6 +46,7 @@ class IntroFragment : Fragment() {
         // Move to random screen
         binding.introToRandomScreenBtn.setOnClickListener {
             Log.i(TAG, "--> onViewCreated: Move to random screen")
+            view.findNavController().navigate(R.id.action_introFragment_to_randomFragment)
         }
     }
 

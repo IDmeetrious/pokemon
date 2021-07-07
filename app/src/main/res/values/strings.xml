@@ -2,6 +2,7 @@
     <!-- Application   -->
     <string name="app_name">Pokemon</string>
     <string name="pokemon_logo">Pokemon Logo</string>
+    <string name="status_error_message">Can\'t load pokemon information</string>
 
     <!-- Intro   -->
     <string name="move_search_screen_btn">Go to search screen</string>
@@ -21,7 +22,7 @@
     <string name="id_tv">999</string>
     <string name="name_tv">Pokemon</string>
     <string name="add_to_favorite_btn">Add to favorite</string>
-    <string name="success_in_favorite_btn">Successfully added!</string>
+    <string name="success_in_favorite_btn">Successfully added to favorite!</string>
 
     <!-- Random   -->
     <!-- Favorite   -->
