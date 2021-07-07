@@ -14,24 +14,6 @@ class RemoteDataSourceImpl(
     private val mapper: DtoToEntityMapper
 ) : RemoteDataSource {
     override suspend fun getPokemon(name: String): Single<Pokemon> =
-//        withContext(Dispatchers.IO){
-//            try {
-//                var result: Result<Pokemon>? = null
-//                api.getPokemonByName(name)
-//                    .doOnSuccess {
-//                        result = Result.Success(mapper.toPokemonEntity(it))
-//                        Log.i(TAG, "--> getPokemon: result($result)")
-//                    }
-//                    .doOnError {
-//                        it.message?.let { msg ->
-//                            result = Result.Error(msg)
-//                        }
-//                    }
-//                return@withContext result ?: Result.Loading
-//            } catch (e: Exception){
-//                return@withContext Result.Error(e.message ?: "Exception")
-//            }
-//        }
         api.getPokemonByName(name)
             .subscribeOn(Schedulers.io())
             .map { mapper.toPokemonEntity(it) }
