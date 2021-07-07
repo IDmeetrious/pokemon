@@ -88,10 +88,10 @@ class SearchFragment : Fragment() {
     }
 
     private fun updateProgressBar() {
-        binding.searchProgress.visibility.apply {
+        binding.searchProgress.apply {
             mainScope.launch {
                 viewModel.downloadState.collect { status ->
-                    when (status) {
+                    visibility = when (status) {
                         Status.LOADING -> { View.VISIBLE }
                         Status.SUCCESS -> { View.GONE }
                         Status.ERROR -> { View.GONE }
@@ -133,7 +133,6 @@ class SearchFragment : Fragment() {
         name.text = p.name
         height.text = "${p.height}"
         weight.text = "${p.weight}"
-
     }
 
     private fun hideKeyboard() {
