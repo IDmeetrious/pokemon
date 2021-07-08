@@ -8,6 +8,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/search_field_et"
+        android:filterTouchesWhenObscured="true"
         style="@style/Widget.Search.EditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

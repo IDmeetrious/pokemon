@@ -3,6 +3,7 @@ package github.idmeetrious.pokemon.presentation.ui.menu
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,11 @@ private const val TAG = "MenuFragment"
 class MenuFragment : Fragment() {
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +52,17 @@ class MenuFragment : Fragment() {
         binding.menuToRandomScreenBtn.setOnClickListener {
             Log.i(TAG, "--> onViewCreated: Move to random screen")
             view.findNavController().navigate(R.id.action_menuFragment_to_randomFragment)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.appbar_favorites_menu -> {
+                view?.findNavController()?.navigate(R.id.action_menuFragment_to_favoriteFragment)
+                Log.i(TAG, "--> onOptionsItemSelected: ")
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

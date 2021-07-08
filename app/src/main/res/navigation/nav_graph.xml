@@ -17,11 +17,21 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="github.idmeetrious.pokemon.presentation.ui.search.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment"
+            app:popUpTo="@id/searchFragment" />
+    </fragment>
     <fragment
         android:id="@+id/randomFragment"
         android:name="github.idmeetrious.pokemon.presentation.ui.random.RandomFragment"
-        android:label="RandomFragment" />
+        android:label="RandomFragment" >
+        <action
+            android:id="@+id/action_randomFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment"
+            app:popUpTo="@id/randomFragment" />
+    </fragment>
     <fragment
         android:id="@+id/menuFragment"
         android:name="github.idmeetrious.pokemon.presentation.ui.menu.MenuFragment"
@@ -34,5 +44,13 @@
             android:id="@+id/action_menuFragment_to_randomFragment"
             app:destination="@id/randomFragment"
             app:popUpTo="@id/menuFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment"
+            app:popUpTo="@id/menuFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="github.idmeetrious.pokemon.presentation.ui.favorite.FavoriteFragment"
+        android:label="FavoriteFragment" />
 </navigation>

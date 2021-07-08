@@ -3,19 +3,19 @@ package github.idmeetrious.pokemon.presentation.ui.search
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import github.idmeetrious.pokemon.R
 import github.idmeetrious.pokemon.databinding.FragmentSearchBinding
@@ -23,8 +23,6 @@ import github.idmeetrious.pokemon.domain.common.Status
 import github.idmeetrious.pokemon.domain.entities.Pokemon
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-
-private const val TAG = "SearchFragment"
 
 class SearchFragment : Fragment() {
 
@@ -40,6 +38,13 @@ class SearchFragment : Fragment() {
 
     private var progressBar: ProgressBar? = null
     private var itemView: ConstraintLayout? = null
+    private var resultTv: TextView? = null
+    private var favoriteBtn: Button? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +55,8 @@ class SearchFragment : Fragment() {
         val rootView = binding.root
         progressBar = requireActivity().findViewById(R.id.main_search_progress)
         itemView = binding.searchResultItemLayout.searchResultItemLayout
+        resultTv = binding.searchResultTv
+        favoriteBtn = binding.searchResultItemLayout.itemFavoriteBtn
         return rootView
     }
 
@@ -60,7 +67,7 @@ class SearchFragment : Fragment() {
         initSearchItem()
         updateViewsWithProgress()
 
-        mainScope.launch {
+        lifecycleScope.launchWhenStarted {
             viewModel.pokemon.collect { pokemon ->
                 pokemon?.let {
                     binding.searchResultTv.apply {
@@ -82,19 +89,20 @@ class SearchFragment : Fragment() {
         }
 
         binding.searchFieldBtn.setOnClickListener {
-            Log.i(TAG, "--> onViewCreated: Search clicked")
-            val query = binding.searchFieldEt.text.toString()
-            if (query.trim().isNotEmpty())
-                ioScope.launch {
-                    viewModel.findPokemon(query)
+            binding.searchFieldEt.apply {
+                requestFocus()
+                val query = text.toString().trim()
+                if (query.isNotEmpty()) {
+                    lifecycleScope.launchWhenStarted {
+                        viewModel.findPokemon(query)
+                    }
+                } else {
+                    error = getString(R.string.search_field_error)
+                    viewModel.setInitStatus()
                 }
-            hideKeyboard()
-        }
-        binding.searchResultItemLayout.itemFavoriteBtn.apply {
-            setOnClickListener {
-                Log.i(TAG, "--> onViewCreated: Add favorite clicked")
-                viewModel.addFavorite()
             }
+
+            hideKeyboard()
         }
         updateFavoriteButton()
     }
@@ -104,7 +112,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun updateViewsWithProgress() {
-        mainScope.launch {
+        lifecycleScope.launchWhenStarted {
             viewModel.downloadState.collect { status ->
                 when (status) {
                     Status.LOADING -> {
@@ -127,6 +135,7 @@ class SearchFragment : Fragment() {
                     Status.INIT -> {
                         progressBar?.visibility = View.INVISIBLE
                         itemView?.visibility = View.INVISIBLE
+                        resultTv?.visibility = View.INVISIBLE
                     }
                 }
             }
@@ -134,17 +143,39 @@ class SearchFragment : Fragment() {
     }
 
     private fun updateFavoriteButton() {
-        binding.searchResultItemLayout.itemFavoriteBtn.apply {
-            mainScope.launch {
-                viewModel.uploadState.collect { status ->
-                    if (status == Status.SUCCESS) {
-                        setText(R.string.success_in_favorite_btn)
-                    } else {
-                        setText(R.string.add_to_favorite_btn)
+        ioScope.launch {
+            viewModel.checkInFavorite()
+        }
+
+        favoriteBtn?.setOnClickListener {
+            viewModel.addFavorite()
+            if (viewModel.addedState.value) {
+                viewModel.setAddedState(false)
+                findNavController().navigate(R.id.action_searchFragment_to_favoriteFragment)
+            } else {
+                viewModel.setAddedState(true)
+            }
+        }
+        mainScope.launch {
+            viewModel.addedState.collect { state ->
+                when (state) {
+                    true -> {
+                        favoriteBtn?.setText(R.string.go_to_favorite_btn)
+                        setColor(favoriteBtn, R.color.green_500)
+                    }
+                    false -> {
+                        favoriteBtn?.setText(R.string.add_to_favorite_btn)
+                        setColor(favoriteBtn, R.color.grey_800)
                     }
                 }
             }
         }
+    }
+
+    private fun setColor(view: View?, color: Int) {
+        view?.backgroundTintList = ContextCompat.getColorStateList(
+            requireContext(), color
+        )
     }
 
     private fun loadImage(uri: String, iv: ImageView) {
@@ -169,6 +200,16 @@ class SearchFragment : Fragment() {
         val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE)
                 as InputMethodManager
         inputManager.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.appbar_favorites_menu -> {
+                view?.findNavController()?.navigate(R.id.action_searchFragment_to_favoriteFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {

@@ -11,6 +11,7 @@
 
     <!-- Search   -->
     <string name="search_field_hint">For example: pikachu</string>
+    <string name="search_field_error">Wrong query, try again</string>
     <string name="title_tv">Find your pokemon</string>
     <string name="searching_result_tv">Searching result:</string>
     <string name="id_static_tv">Id: </string>
@@ -22,8 +23,18 @@
     <string name="id_tv">999</string>
     <string name="name_tv">Pokemon</string>
     <string name="add_to_favorite_btn">Add to favorite</string>
-    <string name="success_in_favorite_btn">Successfully added to favorite!</string>
 
     <!-- Random   -->
+    <string name="random_pokemon_btn">Random pokemon</string>
+
     <!-- Favorite   -->
+    <string name="delete_from_favorite_btn">Delete from favorite</string>
+    <string name="go_to_favorite_btn">Go to favorite</string>
+    <string name="success_added_in_favorite_btn">Successfully added to favorite!</string>
+    <string name="success_deleted_from_favorite_btn">Successfully deleted from favorite!</string>
+    <string name="delete_error_message">Can\'t delete pokemon from favorite</string>
+    <string name="loading_error_message">Can\'t load favorite information</string>
+    <string name="appbar_menu_title">Favorites</string>
+
+
 </resources>
