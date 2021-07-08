@@ -59,8 +59,7 @@
         <item name="android:layout_width">88dp</item>
         <item name="android:layout_height">88dp</item>
     </style>
-    <style name="Widget.Search.Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:background">@drawable/add_favorite_button_selector</item>
+    <style name="Widget.Favorite.Button" parent="Widget.AppCompat.Button">
         <item name="android:textSize">@dimen/menu_button_text</item>
     </style>
 </resources>

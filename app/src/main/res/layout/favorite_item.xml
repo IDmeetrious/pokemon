@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.Search.ItemView"
+    android:layout_marginHorizontal="@dimen/layout_padding_vertical_8"
+    android:layout_marginTop="@dimen/layout_padding_vertical_8"
+    android:id="@+id/favorite_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/favorite_item_id_static_tv"
+        style="@style/Widget.Search.TextView.Static"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/id_static_tv"
+        app:layout_constraintStart_toEndOf="@+id/item_front_def_iv"
+        app:layout_constraintTop_toTopOf="@+id/item_front_def_iv"
+        tools:layout_editor_absoluteX="224dp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/favorite_item_name_static_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        style="@style/Widget.Search.TextView.Static"
+        android:text="@string/name_static_tv"
+        app:layout_constraintStart_toStartOf="@+id/favorite_item_id_static_tv"
+        app:layout_constraintTop_toBottomOf="@+id/favorite_item_id_static_tv" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/favorite_item_id_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        style="@style/Widget.Search.TextView"
+        android:text="@string/id_tv"
+        app:layout_constraintStart_toEndOf="@+id/favorite_item_id_static_tv"
+        app:layout_constraintTop_toTopOf="@+id/favorite_item_id_static_tv" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/favorite_item_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        style="@style/Widget.Search.TextView"
+        android:text="@string/name_tv"
+        app:layout_constraintStart_toEndOf="@+id/favorite_item_name_static_tv"
+        app:layout_constraintTop_toTopOf="@+id/favorite_item_name_static_tv" />
+
+    <ImageView
+        android:id="@+id/item_front_def_iv"
+        style="@style/Widget.Search.Item.ImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+    <ImageButton
+        android:id="@+id/favorite_item_delete_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red_700"
+        android:contentDescription="@string/delete_from_favorite_btn"
+        android:src="@android:drawable/ic_menu_delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
