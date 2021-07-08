@@ -1,5 +1,6 @@
 package github.idmeetrious.pokemon.presentation.ui.random
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import github.idmeetrious.pokemon.domain.common.Status
@@ -8,8 +9,11 @@ import github.idmeetrious.pokemon.domain.usecases.AddFavoriteUseCase
 import github.idmeetrious.pokemon.domain.usecases.GetPokemonUseCase
 import github.idmeetrious.pokemon.presentation.application.App
 import io.reactivex.rxjava3.disposables.Disposable
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -92,5 +96,4 @@ class RandomViewModel : ViewModel() {
         super.onCleared()
         disposable?.dispose()
     }
-
 }

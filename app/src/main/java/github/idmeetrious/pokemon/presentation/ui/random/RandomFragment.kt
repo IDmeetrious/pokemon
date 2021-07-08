@@ -9,10 +9,10 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import github.idmeetrious.pokemon.R
 import github.idmeetrious.pokemon.databinding.FragmentRandomBinding

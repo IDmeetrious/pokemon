@@ -98,8 +98,6 @@ class SearchViewModel : ViewModel() {
                     Log.e(TAG, "--> checkInFavorite: ${it.message}")
                 })
         }
-
-
     }
 
     fun setInitStatus() {
@@ -116,6 +114,6 @@ class SearchViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        disposable?.dispose()
+        disposable?.dispose()        
     }
 }
